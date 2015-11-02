@@ -40,4 +40,14 @@ describe StandupMessage do
       StandupMessage.for(@repo_url).must_equal 'Yesterday I add public page for users, refactor the public pages controller'
     end
   end
+
+  describe 'when I made two commits yesterday' do
+    before do
+      create_commit message: 'Add public page for users', author: { time: 2.days.ago, email: 'me@example.org', name: 'Me' }
+    end
+
+    it 'should include this commit in my standup' do
+      StandupMessage.for(@repo_url).must_equal 'Yesterday I add public page for users, refactor the public pages controller'
+    end
+  end
 end

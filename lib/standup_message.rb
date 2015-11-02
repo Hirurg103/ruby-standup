@@ -10,6 +10,7 @@ class StandupMessage
   def self.commit_messages_for(repo_url)
     commit_messages = []
     Rugged::Repository.new(repo_url).walk('HEAD') do |commit|
+      puts commit.committer[:time]
       commit_messages << commit.message
     end
     commit_messages.reverse

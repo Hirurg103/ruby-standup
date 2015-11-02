@@ -13,6 +13,7 @@ GEM
     rugged (0.23.3)
     thor (0.19.1)
     thread_safe (0.3.5)
+    timecop (0.8.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
 
@@ -24,3 +25,4 @@ DEPENDENCIES
   minitest
   rugged
   thor
+  timecop
