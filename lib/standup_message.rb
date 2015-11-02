@@ -12,6 +12,6 @@ class StandupMessage
     Rugged::Repository.new(repo_url).walk('HEAD') do |commit|
       commit_messages << commit.message
     end
-    commit_messages
+    commit_messages.reverse
   end
 end

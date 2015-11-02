@@ -29,4 +29,15 @@ describe StandupMessage do
       StandupMessage.for(@repo_url).must_equal 'Yesterday I add public page for users'
     end
   end
+
+  describe 'when I made two commits yesterday' do
+    before do
+      create_commit message: 'Add public page for users'
+      create_commit message: 'Refactor the public pages controller'
+    end
+
+    it 'should include this commit in my standup' do
+      StandupMessage.for(@repo_url).must_equal 'Yesterday I add public page for users, refactor the public pages controller'
+    end
+  end
 end
