@@ -1,11 +1,4 @@
-require 'minitest/autorun'
-require 'active_support/all'
-require 'rugged'
-
-lib = File.expand_path('../../lib', __FILE__)
-
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'standup_message'
+require_relative './test_helper'
 
 describe StandupMessage do
   describe 'when I made only commit yesterday' do
