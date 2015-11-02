@@ -1,8 +1,9 @@
-require 'thor'
-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'standup_message'
+
+require 'bundler'
+Bundler.require(:default)
 
 class Standup < Thor
   desc "generate_for repo_url" ,"generates my standup based on my yesterday's commits"
