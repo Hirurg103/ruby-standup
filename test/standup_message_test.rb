@@ -5,8 +5,9 @@ def create_commit(attrs)
     message: 'Initial commit',
     parents: @repo.empty? ? [] : [@repo.head.target].compact,
     update_ref: 'HEAD',
-    tree: @repo.index.write_tree(@repo)
-  }.merge(attrs))
+    tree: @repo.index.write_tree(@repo),
+    author: { time: Time.now, email: 'me@example.org', name: 'Me' }
+  }.deep_merge(attrs))
 end
 
 describe StandupMessage do
@@ -22,7 +23,7 @@ describe StandupMessage do
 
   describe 'when I made only commit yesterday' do
     before do
-      create_commit message: 'Add public page for users'
+      create_commit message: 'Add public page for users', author: { time: 1.day.ago }
     end
 
     it 'should include this commit in my standup' do
@@ -32,8 +33,8 @@ describe StandupMessage do
 
   describe 'when I made two commits yesterday' do
     before do
-      create_commit message: 'Add public page for users'
-      create_commit message: 'Refactor the public pages controller'
+      create_commit message: 'Add public page for users', author: { time: 1.day.ago }
+      create_commit message: 'Refactor the public pages controller', author: { time: 1.day.ago }
     end
 
     it 'should include this commit in my standup' do
@@ -41,13 +42,13 @@ describe StandupMessage do
     end
   end
 
-  describe 'when I made two commits yesterday' do
+  describe "when I did't do any commits yesterday" do
     before do
-      create_commit message: 'Add public page for users', author: { time: 2.days.ago, email: 'me@example.org', name: 'Me' }
+      create_commit message: 'Add public page for users', author: { time: 2.days.ago }
     end
 
     it 'should include this commit in my standup' do
-      StandupMessage.for(@repo_url).must_equal 'Yesterday I add public page for users, refactor the public pages controller'
+      StandupMessage.for(@repo_url).must_equal "Yesterday I didn't work too much"
     end
   end
 end
