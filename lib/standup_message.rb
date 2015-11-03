@@ -16,7 +16,7 @@ class StandupMessage
     commit_messages = []
     Rugged::Repository.new(repo_url).walk('HEAD') do |commit|
       if commit.author[:time].between? 1.day.ago.beginning_of_day, 1.day.ago.end_of_day
-        commit_messages << commit.message
+        commit_messages << commit.message.strip
       end
     end
 
